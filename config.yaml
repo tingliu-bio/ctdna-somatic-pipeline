@@ -1,0 +1,30 @@
+# ── Sample table ──────────────────────────────────────────────────────────────
+# TSV with columns: sample, fq1, fq2, normal_bam, tumor_sm, normal_sm
+sample_table: "config/samples.tsv"
+
+# ── Output directory ──────────────────────────────────────────────────────────
+outdir: "results"
+
+# ── Reference genome ──────────────────────────────────────────────────────────
+ref_genome: "/path/to/GCA_000001405.15_GRCh38_no_alt_analysis_set.fasta"
+
+# ── Target regions (BED files) ────────────────────────────────────────────────
+amplicon_bed: "/path/to/amplicon.bed"
+targets_bed:  "/path/to/targets.bed"
+
+# ── ConsensusCruncher ─────────────────────────────────────────────────────────
+consensus_cruncher: "/path/to/ConsensusCruncher.py"
+umi_index:          "/path/to/IDT_dual_Index.txt"
+cytoband:           "/path/to/hg38_cytoBand.txt"
+
+# ── Tool paths ────────────────────────────────────────────────────────────────
+bwa_path:     "/path/to/bwa"
+samtools_path: "/path/to/samtools"
+picard_jar:   "/path/to/picard.jar"
+
+# ── GATK resources ────────────────────────────────────────────────────────────
+gnomad_vcf: "/path/to/af-only-gnomad.hg38.vcf.gz"
+
+# ── Annotation ────────────────────────────────────────────────────────────────
+vep_cache:   "/path/to/vep_cache/GRCh38/98"
+annovar_db:  "/path/to/annovar/humandb"
