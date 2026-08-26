@@ -19,13 +19,15 @@ FASTQ_merged_Normals/ ──→ ConsensusCruncher ──→ consensus_output_Nor
 
 consensus_output_Tumours ──┐
                            ├─→ Mutect2 ──→ GetPileupSummaries ──→ CalculateContamination
-consensus_output_Tumours  ─┘           ──→ FilterMutectCalls ──→ SelectVariants (PASS,tumor-only)
+consensus_output_Normals  ─┘           ──→ FilterMutectCalls ──→ SelectVariants (PASS, tumor-only)
 
 Filtered VCF ──→ VEP
              ──→ vt normalize/decompose ──→ ANNOVAR
 ```
 
 Run separately for `sscs_sc` and `dcs_sc` BAM types.
+
+---
 
 ## Steps
 
@@ -62,15 +64,18 @@ Edit `config/config.yaml` to set paths to the reference genome, target BED files
 
 Edit `config/samples.tsv`:
 
-| sample | fq1 | fq2 | normal_bam | tumor_sm | normal_sm |
-|--------|-----|-----|------------|----------|-----------|
-| SAMPLE1 | SAMPLE1_R1.fastq.gz | SAMPLE1_R2.fastq.gz | SAMPLE1_GL.bam | SAMPLE1_T | SAMPLE1_GL |
+| sample | tumor_fq1 | tumor_fq2 | normal_fq1 | normal_fq2 | normal_prefix |
+|--------|-----------|-----------|------------|------------|---------------|
+| SAMPLE001_T | SAMPLE001_T_R1.fastq.gz | SAMPLE001_T_R2.fastq.gz | SAMPLE001_GL_R1.fastq.gz | SAMPLE001_GL_R2.fastq.gz | SAMPLE001_GL |
 
 **3. Run**
 
 ```bash
 # Dry run
-snakemake -s workflow/Snakefile -n
+snakemake -s workflow/ConsensusCruncher_tumor_normal_hg38.smk -n
+
+# Run locally
+snakemake -s workflow/ConsensusCruncher_tumor_normal_hg38.smk --cores 8
 
 # Submit to Slurm cluster
 sbatch run_pipeline.sh
@@ -81,13 +86,19 @@ sbatch run_pipeline.sh
 ## Output
 
 ```
-results/
-├── consensus/          # ConsensusCruncher BAMs
-├── consensus_output/   # DCS consensus BAMs
-├── coverage/           # Interval lists and PCR metrics
-├── vcfs/               # Raw, filtered, and final VCFs
-├── vep/                # VEP annotation tables
-└── annovar/            # Normalized, decomposed, ANNOVAR-annotated VCFs
+{outdir}/
+├── consensus_Tumours/          # Tumor fastq2bam BAMs
+├── consensus_output_Tumours/   # Tumor SSCS/DCS consensus BAMs
+│   ├── sscs_sc/
+│   └── dcs_sc/
+├── consensus_Normals/          # Normal fastq2bam BAMs
+├── consensus_output_Normals/   # Normal SSCS/DCS consensus BAMs
+│   ├── sscs_sc/
+│   └── dcs_sc/
+├── coverage/                   # Interval lists and PCR metrics
+├── vcfs/{bam_type}/            # Raw, filtered, and final VCFs
+├── vep/{bam_type}/             # VEP annotation tables
+└── annovar/{bam_type}/         # Normalized, decomposed, ANNOVAR-annotated VCFs
 ```
 
 ---
