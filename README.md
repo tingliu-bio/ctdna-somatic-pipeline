@@ -87,10 +87,8 @@ Tumor files must follow the pattern `*_T[1-5]_R1/R2.fastq.gz`. Normal files must
 
 ```bash
 # Dry run
-snakemake -s workflow/ConsensusCruncher_tumor_normal_hg38.smk -n
+snakemake -s ConsensusCruncher_tumor_normal_hg38.smk -n
 
-# Run locally
-snakemake -s workflow/ConsensusCruncher_tumor_normal_hg38.smk --cores 8
 
 # Submit to Slurm cluster
 sbatch run_pipeline.sh
