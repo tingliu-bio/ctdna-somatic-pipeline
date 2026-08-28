@@ -1,3 +1,0 @@
-sample	tumor_fq1	tumor_fq2	normal_fq1	normal_fq2	normal_prefix
-SAMPLE001_T	/path/to/FASTQ_merged_Tumours/SAMPLE001_T_R1.fastq.gz	/path/to/FASTQ_merged_Tumours/SAMPLE001_T_R2.fastq.gz	/path/to/FASTQ_merged_Normals/SAMPLE001_GL_R1.fastq.gz	/path/to/FASTQ_merged_Normals/SAMPLE001_GL_R2.fastq.gz	SAMPLE001_GL
-SAMPLE002_T	/path/to/FASTQ_merged_Tumours/SAMPLE002_T_R1.fastq.gz	/path/to/FASTQ_merged_Tumours/SAMPLE002_T_R2.fastq.gz	/path/to/FASTQ_merged_Normals/SAMPLE002_GL_R1.fastq.gz	/path/to/FASTQ_merged_Normals/SAMPLE002_GL_R2.fastq.gz	SAMPLE002_GL

@@ -65,16 +65,16 @@ if [[ "$input_fq1" =~ ${file_path}/(.*)_R1.fastq.gz ]]
 python ConsensusCruncher.py fastq2bam \
 --fastq1 $input_fq1  --fastq2 ${file_path}/${prefix}_R2.fastq.gz \
 -o ${work_path}/consensus_Tumours \
--r /cluster/projects/kridelgroup/resources/Homo_sapiens_BWA_ref_updated_2024/seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
--b /cluster/tools/software/bwa/0.7.15/bwa \
--s /cluster/tools/software/rocky9/samtools/1.20/bin/samtools \
+-r GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
+-b bwa \
+-s samtools \
 -l  ${UMI_index} \
 -g /cluster/tools/software/picard/2.10.9/picard.jar
 
 python ConsensusCruncher.py consensus \
 -i ${bam_path}/${prefix}.sorted.bam \
 -o ${work_path}/consensus_output_Tumours \
--s /cluster/tools/software/rocky9/samtools/1.20/bin/samtools \
+-s samtools \
 -g hg38 \
 -b ${cytobandpath} \
 --cleanup True

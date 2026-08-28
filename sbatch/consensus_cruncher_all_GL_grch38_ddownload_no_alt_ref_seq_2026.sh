@@ -16,7 +16,6 @@ work_path=$SLURM_SUBMIT_DIR
 #resources to run the gatk, no slash at the end
 
 file_path="${work_path}/FASTQ_merged_Normals"
-#control_path="/cluster/projects/kridelgroup/LIBERATE/RAP_Ting_test_2021/germline_control"
 #path to the fq files, no slash at the end
 #file=$file_path/*.fastq.gz
 ##use the prefix of the fq file will be used as the output prefix
@@ -67,16 +66,16 @@ if [[ "$input_fq1" =~ ${file_path}/(.*)_R1.fastq.gz ]]
 python ConsensusCruncher.py fastq2bam \
 --fastq1 $input_fq1  --fastq2 ${file_path}/${prefix}_R2.fastq.gz \
 -o ${work_path}/consensus_Normals \
--r /cluster/projects/kridelgroup/resources/Homo_sapiens_BWA_ref_updated_2024/seqs_for_alignment_pipelines/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
--b /cluster/tools/software/bwa/0.7.15/bwa \
--s /cluster/tools/software/rocky9/samtools/1.20/bin/samtools \
+-r GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
+-b bwa \
+-s samtools \
 -l  ${UMI_index} \
--g /cluster/tools/software/picard/2.10.9/picard.jar
+-g picard.jar
 
 python /ConsensusCruncher.py consensus \
 -i ${bam_path}/${prefix}.sorted.bam \
 -o ${work_path}/consensus_output_Normals \
--s /cluster/tools/software/rocky9/samtools/1.20/bin/samtools \
+-s samtools \
 -g hg38 \
 -b ${cytobandpath} \
 --cleanup True
