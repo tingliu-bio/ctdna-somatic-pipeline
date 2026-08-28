@@ -118,9 +118,9 @@ sbatch run_pipeline.sh
 │       ├── tumor_samples/
 │       └── germline_controls/
 ├── coverage/                        # Interval lists and PCR metrics
-├── vcfs/{bam_type}/                 # Raw, filtered, and final VCFs
-├── vep/{bam_type}/                  # VEP annotation tables
-└── annovar/{bam_type}/              # Normalized, decomposed, ANNOVAR-annotated VCFs
+├── vcfs/                            # Raw, filtered, and final VCFs
+├── vep/                             # VEP annotation tables
+└── annovar/                         # Normalized, decomposed, ANNOVAR-annotated VCFs
 ```
 
 ---
