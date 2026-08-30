@@ -69,14 +69,14 @@ tumor_samplename=($(samtools view -H ${input_bam} | grep '^@RG'  |head -1 | sed 
 #printout the sample name to check the files
 
 echo "tumor_samplename=$tumor_samplename"
-#coordinates of probes (coding and non-coding) used as provided by IDT and Robert
+#coordinates of probes (coding and non-coding) used as provided by IDT 
 
 amplicon_interval_list=/ressources/target_regions/hg38/picard_tools_amps_input.bed
-#amplicon intervals list that liftovered by Gabrielle
+#amplicon intervals list liftovered
 
-#coordinates of targets (coding and non-coding) used as provided by IDT and Robert
+#coordinates of targets (coding and non-coding) used as provided by IDT
 targets_interval_list=/ressources/target_regions/hg38/picard_tools_targets_input.bed
-##target intervals list that liftovered by Gabrielle
+##target intervals list that liftovered 
 
 ##get the prefix and control name
 if [[ "$input_bam" =~ ${file_path}/(.*).sorted.bam ]]
