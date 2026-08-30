@@ -18,7 +18,7 @@ ctDNA concentration = log10( cfDNA_plasma × mean(VAF_reporters) / 3.3 pg/hGE )
 <img src="images/mean_VAF.png" width="200">
 
 - Updated the formula of hGE/ml per sample:
-<img src="images/hGE-ml.png" width="270">
+<img src="images/hGE-ml.png" width="250">
 
 - n: number of reporter mutations per sample
 
