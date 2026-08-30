@@ -14,16 +14,11 @@ divided by 3.3 (pg/hGE) and reported as a 10-base logarithm.
 
 ctDNA concentration = log10( cfDNA_plasma × mean(VAF_reporters) / 3.3 pg/hGE )
 
-Definition of Mean VAF per sample:
-         Mean VAF = (∑_(i=1)^n▒〖VAF〗_i )/n
+- Definition of Mean VAF per sample:
+![Mean VAF formula](mean_VAF.png)
 
+- Updated the formula of hGE/ml per sample:
+ ![hGE/mL formula](hGE_ml.png)
 
-Updated the formula of hGE/ml per sample:
-         log10((cfDNA×(∑_(i=1)^n▒〖VAF〗_i )/n)/(3.3pg/hgE))
-
-
-Where:
-- mean(VAF_reporters) = ( Σ VAF_i ) / n
-- cfDNA_plasma: cell-free DNA concentration (pg/mL)
 - n: number of reporter mutations per sample
 
