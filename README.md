@@ -125,7 +125,7 @@ sbatch run_pipeline.sh
 
 ---
 
-# ctDNA Quantification
+## ctDNA Quantification
 
 Implementation of ctDNA concentration quantification in log10-transformed 
 haploid genome equivalents per milliliter of plasma (log10 hGE/mL).
