@@ -2,7 +2,7 @@ import re
 from os.path import join, basename
 from glob import glob
 
-configfile: "config/config.yaml"
+configfile: "config/config_template.yaml"
 
 # ── Sample discovery from FASTQ directories ───────────────────────────────────
 # Tumors: *_T[1-5]_R1.fastq.gz
@@ -71,9 +71,6 @@ rule tumor_fastq2bam:
     message: "Tumor fastq2bam: {wildcards.sample}"
     shell:
         """
-        module load bwa/0.7.15
-        module load samtools/1.20
-        module load python3/3.7.2
         python {config[consensus_cruncher]} fastq2bam \
             --fastq1 {input.fq1} \
             --fastq2 {input.fq2} \
@@ -100,8 +97,6 @@ rule tumor_consensus:
     message: "Tumor consensus: {wildcards.sample}"
     shell:
         """
-        module load samtools/1.20
-        module load python3/3.7.2
         python {config[consensus_cruncher]} consensus \
             -i {input.bam} \
             -o {params.outdir} \
@@ -130,9 +125,6 @@ rule normal_fastq2bam:
     message: "Normal fastq2bam: {wildcards.normal_prefix}"
     shell:
         """
-        module load bwa/0.7.15
-        module load samtools/1.20
-        module load python3/3.7.2
         python {config[consensus_cruncher]} fastq2bam \
             --fastq1 {input.fq1} \
             --fastq2 {input.fq2} \
@@ -159,8 +151,6 @@ rule normal_consensus:
     message: "Normal consensus: {wildcards.normal_prefix}"
     shell:
         """
-        module load samtools/1.20
-        module load python3/3.7.2
         python {config[consensus_cruncher]} consensus \
             -i {input.bam} \
             -o {params.outdir} \
@@ -263,8 +253,6 @@ rule mutect2:
     message: "Mutect2 [{wildcards.bam_type}]: {wildcards.sample}"
     shell:
         """
-        module load samtools/1.20
-        module load gatk/4.1.8.1
         tumor_sm=$(samtools view -H {input.tumor} | grep '^@RG' | head -1 | sed "s/.*SM:\\([^\\t]*\\).*/\\1/g")
         normal_sm=$(samtools view -H {input.normal} | grep '^@RG' | head -1 | sed "s/.*SM:\\([^\\t]*\\).*/\\1/g")
 
@@ -297,8 +285,6 @@ rule filter_variants:
     message: "Filtering [{wildcards.bam_type}]: {wildcards.sample}"
     shell:
         """
-        module load samtools/1.20
-        module load gatk/4.1.8.1
         tumor_sm=$(samtools view -H {input.bam} | grep '^@RG' | head -1 | sed "s/.*SM:\\([^\\t]*\\).*/\\1/g")
 
         gatk GetPileupSummaries \
@@ -341,7 +327,6 @@ rule vep_annotate:
     message: "VEP [{wildcards.bam_type}]: {wildcards.sample}"
     shell:
         """
-        module load vep/98
         vep --offline \
             --dir_cache {config[vep_cache]} \
             -i {input.vcf} \
@@ -366,9 +351,6 @@ rule annovar_annotate:
     message: "ANNOVAR [{wildcards.bam_type}]: {wildcards.sample}"
     shell:
         """
-        module load vt/0.577
-        module load annovar/20180416
-        module load tabix
         vt normalize {input.vcf} \
             -r {config[ref_genome]} \
             -o {output.norm}
