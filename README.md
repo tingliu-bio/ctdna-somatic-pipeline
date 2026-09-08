@@ -45,7 +45,7 @@ flowchart TD
     classDef io fill:#e9e9e9,stroke:#8a8a8a,color:#111
 ```
 
-Run separately for `sscs_sc` and `dcs_sc` BAM types.
+Mutect2 is run for each tumor sample (including all longitudinal time points) against its matched germline control, for both the SSCS and DCS consensus BAMs.
 
 ---
 
