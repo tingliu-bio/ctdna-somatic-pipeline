@@ -8,25 +8,41 @@ Tumor-normal paired design: cell-free DNA (cfDNA) from plasma as tumor input, ma
 
 ## Pipeline Overview
 
-```
-FASTQ_merged_Tumours/  (*_T[1-5]_R1/R2.fastq.gz)
-  ──→ ConsensusCruncher ──→ consensus_output_Tumours/{sample}/sscs_sc/*.sorted.sscs.sc.sorted.bam
-                                                              dcs_sc/*.sorted.dcs.sc.sorted.bam
+```mermaid
+flowchart TD
+    RAW[Raw sequencing data<br>paired-end FASTQ]:::io
+    S1[Combined per sample<br>paired-end FASTQ]
+    S2[Combined per patient<br>paired-end FASTQ]
 
-FASTQ_merged_Normals/  (*_GL_R1/R2.fastq.gz)
-  ──→ ConsensusCruncher ──→ consensus_output_Normals/{normal}/sscs_sc/*_GL.sorted.sscs.sc.sorted.bam
-                                                              dcs_sc/*_GL.sorted.dcs.sc.sorted.bam
+    RAW -->|merge lanes| S1
+    S1 -->|merge libraries| S2
 
-tumour_normal_SNV_calling/{bam_type}/
-  ├── tumor_samples/       (symlinks to consensus_output_Tumours)
-  └── germline_controls/   (symlinks to consensus_output_Normals)
-         │
-         ▼
-      Mutect2 ──→ GetPileupSummaries ──→ CalculateContamination
-              ──→ FilterMutectCalls  ──→ SelectVariants (PASS, tumor-only)
+    S2 -->|completed only| GL[Germline control samples]
+    S2 -->|completed only| TU[Tumor samples<br>with matched germline]
 
-Filtered VCF ──→ VEP
-             ──→ vt normalize/decompose ──→ ANNOVAR
+    REF[Reference genome GRCh38]:::io
+    CC1{{ConsensusCruncher<br>amplicon / target intervals}}:::tool
+    CC2{{ConsensusCruncher<br>amplicon / target intervals}}:::tool
+
+    GL --> CC1 --> GLBAM[Corrected control BAMs<br>SSCS and DCS]
+    TU --> CC2 --> TUBAM[Corrected tumor BAMs<br>SSCS and DCS]
+    REF -.-> CC1
+    REF -.-> CC2
+
+    GLBAM --> M2S
+    TUBAM --> M2S
+    GLBAM --> M2D
+    TUBAM --> M2D
+
+    M2S{{Mutect2 SSCS<br>somatic short variant calling}}:::tool
+    M2D{{Mutect2 DCS<br>somatic short variant calling}}:::tool
+
+    M2S --> OUTS([SSCS SNVs per sample]):::out
+    M2D --> OUTD([DCS SNVs per sample]):::out
+
+    classDef tool fill:#f6a24a,stroke:#c76b1f,color:#111
+    classDef out fill:#cfe38a,stroke:#7d9b2c,color:#111
+    classDef io fill:#e9e9e9,stroke:#8a8a8a,color:#111
 ```
 
 Run separately for `sscs_sc` and `dcs_sc` BAM types.
