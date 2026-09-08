@@ -10,9 +10,9 @@ Tumor-normal paired design: cell-free DNA (cfDNA) from plasma as tumor input, ma
 
 ```mermaid
 flowchart TD
-    RAW[Raw sequencing data<br>paired-end FASTQ]:::io
-    S1[Combined per sample<br>paired-end FASTQ]
-    S2[Combined per patient<br>paired-end FASTQ]
+    RAW[Raw sequencing data<br>per-lane FASTQ]:::io
+    S1[Lane-merged FASTQ<br>per library]
+    S2[Library-merged FASTQ<br>per sample]
 
     RAW -->|merge lanes| S1
     S1 -->|merge libraries| S2
