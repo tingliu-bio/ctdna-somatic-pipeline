@@ -24,8 +24,8 @@ flowchart TD
     CC1{{ConsensusCruncher<br>amplicon / target intervals}}:::tool
     CC2{{ConsensusCruncher<br>amplicon / target intervals}}:::tool
 
-    GL --> CC1 --> GLBAM[Corrected control BAMs<br>SSCS and DCS]
-    TU --> CC2 --> TUBAM[Corrected tumor BAMs<br>SSCS and DCS]
+    GL --> CC1 --> GLBAM[Corrected control BAMs<br>SSCS_SC and DCS_SC]
+    TU --> CC2 --> TUBAM[Corrected tumor BAMs<br>SSCS_SC and DCS_SC]
     REF -.-> CC1
     REF -.-> CC2
 
@@ -34,18 +34,18 @@ flowchart TD
     GLBAM --> M2D
     TUBAM --> M2D
 
-    M2S{{Mutect2 SSCS<br>somatic short variant calling}}:::tool
-    M2D{{Mutect2 DCS<br>somatic short variant calling}}:::tool
+    M2S{{Mutect2 SSCS_SC<br>somatic short variant calling}}:::tool
+    M2D{{Mutect2 DCS_SC<br>somatic short variant calling}}:::tool
 
-    M2S --> OUTS([SSCS SNVs per sample]):::out
-    M2D --> OUTD([DCS SNVs per sample]):::out
+    M2S --> OUTS([SSCS_SC SNVs per sample]):::out
+    M2D --> OUTD([DCS_SC SNVs per sample]):::out
 
     classDef tool fill:#f6a24a,stroke:#c76b1f,color:#111
     classDef out fill:#cfe38a,stroke:#7d9b2c,color:#111
     classDef io fill:#e9e9e9,stroke:#8a8a8a,color:#111
 ```
 
-Mutect2 is run for each tumor sample (including all longitudinal time points) against its matched germline control, for both the SSCS and DCS consensus BAMs.
+Mutect2 is run for each tumor sample (including all longitudinal time points) against its matched germline control, for both the SSCS_SC and DCS_SC consensus BAMs.
 
 ---
 
